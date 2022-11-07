@@ -9,6 +9,7 @@
         Title="Kanban BdeB" 
         Height="720" 
         Width="1280"
+        Background="#FFF8EA"
         ResizeMode="CanMinimize">
 
     <Window.Resources>
@@ -17,21 +18,29 @@
             <Setter Property="ItemsControl.Foreground" Value="#FFF8EA"></Setter>
             <Setter Property="ItemsControl.FontFamily" Value="Monaco"></Setter>
             <Setter Property="ItemsControl.FontWeight" Value="Bold"></Setter>
+            <Setter Property="ItemsControl.FontSize" Value="16"></Setter>
+        </Style>
+        <Style x:Key="StyleSousMenu">
+            <Setter Property="ItemsControl.Background" Value="#594545"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#FFF8EA"></Setter>
+            <Setter Property="ItemsControl.FontFamily" Value="Monaco"></Setter>
+            <Setter Property="ItemsControl.FontWeight" Value="Normal"></Setter>
             <Setter Property="ItemsControl.FontSize" Value="12"></Setter>
+            <Setter Property="Border.BorderBrush" Value="#594545"></Setter>
         </Style>
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Style="{StaticResource StyleMenu}">
-            <MenuItem Header="Fichier">
-                <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O"></MenuItem>
-                <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S"></MenuItem>
-                <MenuItem Header="Enregistrer sous..."></MenuItem>
+            <MenuItem Header="Fichier" Style="{StaticResource StyleMenu}">
+                <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O" Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S" Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Édition">
-                <MenuItem Header="Supprimer la tâche"></MenuItem>
+                <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Aide">
-                <MenuItem Header="À Propos"></MenuItem>
+                <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
         </Menu>
         <Grid>
