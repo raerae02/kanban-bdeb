@@ -11,8 +11,17 @@
         Width="1280"
         ResizeMode="CanMinimize">
 
+    <Window.Resources>
+        <Style x:Key="StyleMenu">
+            <Setter Property="ItemsControl.Background" Value="#594545"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#FFF8EA"></Setter>
+            <Setter Property="ItemsControl.FontFamily" Value="Monaco"></Setter>
+            <Setter Property="ItemsControl.FontWeight" Value="Bold"></Setter>
+            <Setter Property="ItemsControl.FontSize" Value="12"></Setter>
+        </Style>
+    </Window.Resources>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
+        <Menu DockPanel.Dock="Top" Style="{StaticResource StyleMenu}">
             <MenuItem Header="Fichier">
                 <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O"></MenuItem>
                 <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S"></MenuItem>
@@ -25,5 +34,8 @@
                 <MenuItem Header="À Propos"></MenuItem>
             </MenuItem>
         </Menu>
+        <Grid>
+            
+        </Grid>
     </DockPanel>
 </Window>
