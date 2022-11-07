@@ -11,7 +11,19 @@
         Width="1280"
         ResizeMode="CanMinimize">
 
-    <Grid>
-
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Fichier">
+                <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O"></MenuItem>
+                <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S"></MenuItem>
+                <MenuItem Header="Enregistrer sous..."></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Édition">
+                <MenuItem Header="Supprimer la tâche"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Aide">
+                <MenuItem Header="À Propos"></MenuItem>
+            </MenuItem>
+        </Menu>
+    </DockPanel>
 </Window>
