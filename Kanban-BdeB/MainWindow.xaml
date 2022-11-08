@@ -12,6 +12,9 @@
         Background="#FFF8EA"
         ResizeMode="CanMinimize">
 
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.AProposCmd}" Executed="APropos_Executed" CanExecute="APropos_CanExecute"></CommandBinding>
+    </Window.CommandBindings>
     <Window.Resources>
         <Style x:Key="StyleMenu">
             <Setter Property="ItemsControl.Background" Value="#594545"></Setter>
@@ -66,7 +69,7 @@
                 <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Aide">
-                <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>
             </MenuItem>
         </Menu>
         
