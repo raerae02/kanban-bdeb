@@ -37,6 +37,21 @@
             <Setter Property="ItemsControl.Height" Value="308"></Setter>
             <Setter Property="ItemsControl.Background" Value="#815B5B"></Setter>
         </Style>
+        <Style x:Key="StyleTextBlockDate">
+            <Setter Property="ItemsControl.Margin" Value="0,0,10,5"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#815B5B"></Setter>
+        </Style>
+        <Style x:Key="StyleButton">
+            <Setter Property="ItemsControl.Margin" Value="10"></Setter>
+            <Setter Property="ItemsControl.Width" Value="100"></Setter>
+            <Setter Property="ItemsControl.Height" Value="20"></Setter>
+            <Setter Property="ItemsControl.Background" Value="#815B5B"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#FFF8EA"></Setter>
+        </Style>
+        <Style x:Key="StyleTextBox">
+            <Setter Property="ItemsControl.BorderBrush" Value="#594545"></Setter>
+            <Setter Property="ItemsControl.Height" Value="20"></Setter>
+        </Style>
     </Window.Resources>
 
 
@@ -54,6 +69,7 @@
                 <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
         </Menu>
+        
         <Grid DockPanel.Dock="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition Height="352" ></RowDefinition>
@@ -73,6 +89,46 @@
                     <TextBlock Style="{StaticResource StyleTitre}">Tâches terminées</TextBlock>
                     <ListBox Style="{StaticResource StyleListBox}"></ListBox>
                 </WrapPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+                <WrapPanel Orientation="Vertical">
+                    <TextBlock Style="{StaticResource StyleTitre}">Informations sur la tâche active</TextBlock>
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">Date début:</TextBlock>
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">Date création:</TextBlock>
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">Date fin:</TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
+                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Margin="0,20">
+                        <TextBlock Style="{StaticResource StyleTitre}">Creation d'une nouvelle tâche:</TextBlock>
+                        <WrapPanel Orientation="Horizontal" Margin="0,5,10,5">
+                            <TextBox Style="{StaticResource StyleTextBox}" Margin="0,0,10,5" Width="290"></TextBox>
+                            <Button Style="{StaticResource StyleButton}" Margin="0,0,15,5">Ajouter tâche</Button>
+                        </WrapPanel>
+                    </StackPanel>
+                </WrapPanel>
+
+                <DockPanel VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock DockPanel.Dock="Top" Style="{StaticResource StyleTitre}">Étapes de réalisation</TextBlock>
+                        <ListBox Style="{StaticResource StyleListBox}" Width="815" Height="240"></ListBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Terminer étape</Button>
+                            <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Supprimer étape</Button>
+                            <TextBox Style="{StaticResource StyleTextBox}" Width="455"></TextBox>
+                            <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Ajouter étape</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </DockPanel>
             </StackPanel>
             
         </Grid>
