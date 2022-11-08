@@ -28,7 +28,20 @@
             <Setter Property="ItemsControl.FontSize" Value="12"></Setter>
             <Setter Property="Border.BorderBrush" Value="#594545"></Setter>
         </Style>
+        <Style x:Key="StyleTitre">
+            <Setter Property="ItemsControl.FontFamily" Value="Times New Roman"></Setter>
+            <Setter Property="ItemsControl.FontSize" Value="18"></Setter>
+            <Setter Property="ItemsControl.FontWeight" Value="Bold"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#594545"></Setter>
+        </Style>
+        <Style x:Key="StyleListBox">
+            <Setter Property="ItemsControl.Width" Value="400"></Setter>
+            <Setter Property="ItemsControl.Height" Value="310"></Setter>
+            <Setter Property="ItemsControl.Background" Value="#815B5B"></Setter>
+        </Style>
     </Window.Resources>
+
+
     <DockPanel>
         <Menu DockPanel.Dock="Top" Style="{StaticResource StyleMenu}">
             <MenuItem Header="Fichier" Style="{StaticResource StyleMenu}">
@@ -43,7 +56,26 @@
                 <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="352" ></RowDefinition>
+                <RowDefinition Height="352"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <WrapPanel Orientation="Vertical" Margin="10">
+                    <TextBlock Style="{StaticResource StyleTitre}">Tâches planifiées</TextBlock>
+                    <ListBox Style="{StaticResource StyleListBox}"></ListBox>
+                </WrapPanel>
+                <WrapPanel Orientation="Vertical" Margin="10">
+                    <TextBlock Style="{StaticResource StyleTitre}">Tâches en cours</TextBlock>
+                    <ListBox Style="{StaticResource StyleListBox}"></ListBox>
+                </WrapPanel>
+                <WrapPanel Orientation="Vertical" Margin="10">
+                    <TextBlock Style="{StaticResource StyleTitre}">Tâches terminées</TextBlock>
+                    <ListBox Style="{StaticResource StyleListBox}"></ListBox>
+                </WrapPanel>
+            </StackPanel>
             
         </Grid>
     </DockPanel>
