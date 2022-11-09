@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Xml;
+using System.IO;
+using Microsoft.Win32;
 
 namespace Kanban_BdeB
 {
@@ -22,15 +24,26 @@ namespace Kanban_BdeB
     {
         //Commandes pour les buttons
 
-        //Commande pour le menu À propos
+        //Commande pour le menu Aide
         public static RoutedCommand AProposCmd = new RoutedCommand();
+
+        //Commande pour le menu Fichier
+        public static RoutedCommand OuvrirFichierCmd = new RoutedCommand();
+
+        //Utilaires pour XML
+        private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
+        private string dossierBase;
+        private string pathFichier;
 
         public MainWindow()
         {
+            dossierBase = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" + "Fichiers-3GP";
+            pathFichier = dossierBase + DIR_SEPARATOR + "taches.xml";
+
             InitializeComponent();
         }
 
-        //Methodes pour le button À propos
+        //Methodes pour le bouton À propos
         private void APropos_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show(
@@ -42,6 +55,33 @@ namespace Kanban_BdeB
         private void APropos_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
+        }
+
+        //Methodes pour le bouton Ouvrir Fichier
+        private void OuvrirFichier_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OuvrirFichier();
+        }
+        private void OuvrirFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void OuvrirFichier()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "xml files (*.xml)|*.xml";
+            openFileDialog.InitialDirectory = dossierBase;
+            bool? resultat = openFileDialog.ShowDialog();
+
+            if (resultat.HasValue && resultat.Value)
+            {
+                pathFichier = openFileDialog.FileName;
+                ChargerTaches(pathFichier);
+            }
+        }
+        private void ChargerTaches(string pathFichier)
+        {
+
         }
     }
 }

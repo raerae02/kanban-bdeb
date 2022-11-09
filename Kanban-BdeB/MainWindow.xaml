@@ -14,6 +14,7 @@
 
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.AProposCmd}" Executed="APropos_Executed" CanExecute="APropos_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Executed="OuvrirFichier_Executed" CanExecute="OuvrirFichier_CanExecute"></CommandBinding>
     </Window.CommandBindings>
     <Window.Resources>
         <Style x:Key="StyleMenu">
@@ -61,7 +62,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" Style="{StaticResource StyleMenu}">
             <MenuItem Header="Fichier" Style="{StaticResource StyleMenu}">
-                <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O" Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.OuvrirFichierCmd}"></MenuItem>
                 <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S" Style="{StaticResource StyleSousMenu}"></MenuItem>
                 <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
@@ -69,7 +70,7 @@
                 <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Aide">
-                <MenuItem Header="À Propos" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>
+                <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>
             </MenuItem>
         </Menu>
         
