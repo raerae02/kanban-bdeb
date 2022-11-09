@@ -30,6 +30,7 @@ namespace Kanban_BdeB
         //Commande pour le menu Fichier
         public static RoutedCommand OuvrirFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerFichierCmd = new RoutedCommand();
+        public static RoutedCommand EnregistrerSousFichierCmd = new RoutedCommand();
 
         //Utilaires pour XML
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
@@ -82,16 +83,41 @@ namespace Kanban_BdeB
         }
         private void ChargerTaches(string pathFichier)
         {
-
+            throw new NotImplementedException();
         }
 
         //Methodes pour le bouton Enregister Fichier
         private void EnregistrerFichier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-
+            SauvegarderTache(pathFichier);
         }
         private void EnregistrerFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
+            //a changer
+            e.CanExecute = true;
+        }
+        private void SauvegarderTache(string nomFichier)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Methodes pour le bouton Enregistrer le fichier sous... 
+        private void EnregistrerSousFichier_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xml files (*.xml)|*.xml";
+            saveFileDialog.InitialDirectory = dossierBase;
+            bool? resultat = saveFileDialog.ShowDialog();
+
+            if (resultat.HasValue && resultat.Value)
+            {
+                pathFichier = saveFileDialog.FileName;
+                SauvegarderTache(pathFichier);
+            }
+        }
+        private void EnregistrerSousFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            //a changer
             e.CanExecute = true;
         }
     }
