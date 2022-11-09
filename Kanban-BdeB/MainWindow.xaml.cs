@@ -29,6 +29,7 @@ namespace Kanban_BdeB
 
         //Commande pour le menu Fichier
         public static RoutedCommand OuvrirFichierCmd = new RoutedCommand();
+        public static RoutedCommand EnregistrerFichierCmd = new RoutedCommand();
 
         //Utilaires pour XML
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
@@ -82,6 +83,16 @@ namespace Kanban_BdeB
         private void ChargerTaches(string pathFichier)
         {
 
+        }
+
+        //Methodes pour le bouton Enregister Fichier
+        private void EnregistrerFichier_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void EnregistrerFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }
