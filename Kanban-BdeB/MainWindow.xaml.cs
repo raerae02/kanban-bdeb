@@ -83,7 +83,7 @@ namespace Kanban_BdeB
         }
         private void ChargerTaches(string pathFichier)
         {
-            throw new NotImplementedException();
+
         }
 
         //Methodes pour le bouton Enregister Fichier
@@ -98,7 +98,7 @@ namespace Kanban_BdeB
         }
         private void SauvegarderTache(string nomFichier)
         {
-            throw new NotImplementedException();
+
         }
 
         //Methodes pour le bouton Enregistrer le fichier sous... 
