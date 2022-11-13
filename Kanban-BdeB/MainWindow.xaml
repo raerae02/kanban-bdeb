@@ -17,6 +17,9 @@
         <CommandBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Executed="OuvrirFichier_Executed" CanExecute="OuvrirFichier_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.EnregistrerFichierCmd}" Executed="EnregistrerFichier_Executed" CanExecute="EnregistrerFichier_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.EnregistrerSousFichierCmd}" Executed="EnregistrerSousFichier_Executed" CanExecute="EnregistrerSousFichier_CanExecute"></CommandBinding>
+
+        <CommandBinding Command="{x:Static local:MainWindow.SupprimerTacheCmd}" Executed="SupprimerTacheCmd_Executed" CanExecute="SupprimerTacheCmd_CanExecute"></CommandBinding>
+
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -77,7 +80,7 @@
                 <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.EnregistrerSousFichierCmd}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Édition">
-                <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.SupprimerTacheCmd}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Aide">
                 <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>

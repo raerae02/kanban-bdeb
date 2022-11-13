@@ -33,6 +33,9 @@ namespace Kanban_BdeB
         public static RoutedCommand EnregistrerFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerSousFichierCmd = new RoutedCommand();
 
+        public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();
+
+
         //Utilaires pour XML
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
         private string dossierBase;
@@ -40,6 +43,8 @@ namespace Kanban_BdeB
 
         //Listes
         private List<Tache> taches;
+
+        private List<ListBox> listBoxes;
         private ObservableCollection<Tache> lesTachesPlanifiees;
         private ObservableCollection<Tache> lesTachesEnCours;
         private ObservableCollection<Tache> lesTachesTerminees;
@@ -50,11 +55,16 @@ namespace Kanban_BdeB
             pathFichier = dossierBase + DIR_SEPARATOR + "taches.xml";
 
             taches = new List<Tache>();
+            listBoxes = new List<ListBox>();
             lesTachesPlanifiees = new ObservableCollection<Tache>();
             lesTachesEnCours = new ObservableCollection<Tache>();
-            lesTachesTerminees= new ObservableCollection<Tache>();
+            lesTachesTerminees = new ObservableCollection<Tache>();
 
             InitializeComponent();
+
+            listBoxes.Add(listBoxTachesPlanifiees);
+            listBoxes.Add(listBoxTachesEnCours);
+            listBoxes.Add(listBoxTachesTerminees);
         }
 
         //Methodes pour le bouton À propos
@@ -194,5 +204,21 @@ namespace Kanban_BdeB
             selectionChangeAction(listBoxTachesTerminees);
         }
 
+
+        private void SupprimerTacheCmd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            foreach(ListBox listBox in listBoxes)
+            {
+                taches.Remove(listBox.SelectedItem as Tache);
+            }
+            
+        }
+        private void SupprimerTacheCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            foreach(ListBox listBox in listBoxes)
+            {
+                e.CanExecute = listBox.SelectedItem != null;
+            }
+        }
     }
 }
