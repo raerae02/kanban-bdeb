@@ -81,5 +81,9 @@ namespace Kanban_BdeB
             
             return elementTache;
         }
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }

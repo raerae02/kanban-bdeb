@@ -54,5 +54,9 @@ namespace Kanban_BdeB
 
             return elementEtape;
         }
+        public override string ToString()
+        {
+            return DescriptionEtape;
+        }
     }
 }
