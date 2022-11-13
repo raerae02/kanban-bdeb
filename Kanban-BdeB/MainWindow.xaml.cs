@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Xml;
 using System.IO;
 using Microsoft.Win32;
+using System.Collections.ObjectModel;
 
 namespace Kanban_BdeB
 {
@@ -37,10 +38,15 @@ namespace Kanban_BdeB
         private string dossierBase;
         private string pathFichier;
 
+        //Listes
+        private ObservableCollection<Tache> lesTachesPlanifiees;
+
         public MainWindow()
         {
             dossierBase = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" + "Fichiers-3GP";
             pathFichier = dossierBase + DIR_SEPARATOR + "taches.xml";
+
+            lesTachesPlanifiees = new ObservableCollection<Tache>();
 
             InitializeComponent();
         }
@@ -83,7 +89,18 @@ namespace Kanban_BdeB
         }
         private void ChargerTaches(string pathFichier)
         {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(pathFichier);
+            XmlElement racine = xmlDocument.DocumentElement;
 
+            //Chargement des taches
+            XmlNodeList nouedsTaches = racine.GetElementsByTagName("tache");
+            foreach(XmlElement xmlElementTache in nouedsTaches)
+            {
+                Tache tache = new Tache(xmlElementTache);
+                lesTachesPlanifiees.Add(tache);
+            }
+            listBoxTachesPlanifiees.ItemsSource = lesTachesPlanifiees;
         }
 
         //Methodes pour le bouton Enregister Fichier

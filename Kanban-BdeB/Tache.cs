@@ -55,8 +55,8 @@ namespace Kanban_BdeB
         public void FromXml(XmlElement xmlElementTache)
         {
             DateCreation = DateOnly.Parse(xmlElementTache.GetAttribute("creation"));
-            DateDebut = DateOnly.Parse(xmlElementTache.GetAttribute("debut"));
-            DateFin = DateOnly.Parse(xmlElementTache.GetAttribute("fin"));
+            //DateDebut = DateOnly.Parse(xmlElementTache.GetAttribute("debut"));
+            //DateFin = DateOnly.Parse(xmlElementTache.GetAttribute("fin"));
 
             XmlElement description = xmlElementTache["description"];
             Description = description.InnerText.Trim();
