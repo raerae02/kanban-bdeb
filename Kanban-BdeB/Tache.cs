@@ -52,19 +52,23 @@ namespace Kanban_BdeB
 
         //Recuperation de l'element xml et classer ses données dans les attributs de la classe Tache
 
-        public void FromXml(XmlElement xmlElement)
+        public void FromXml(XmlElement xmlElementTache)
         {
-            DateCreation = DateOnly.Parse(xmlElement.GetAttribute("creation"));
-            DateDebut = DateOnly.Parse(xmlElement.GetAttribute("debut"));
-            DateFin = DateOnly.Parse(xmlElement.GetAttribute("fin"));
+            DateCreation = DateOnly.Parse(xmlElementTache.GetAttribute("creation"));
+            DateDebut = DateOnly.Parse(xmlElementTache.GetAttribute("debut"));
+            DateFin = DateOnly.Parse(xmlElementTache.GetAttribute("fin"));
 
-            XmlElement description = xmlElement["description"];
+            XmlElement description = xmlElementTache["description"];
             Description = description.InnerText.Trim();
 
-            foreach(Etape etape in Etapes)
+            XmlElement noeudEtape = xmlElementTache["etapes"];
+            XmlNodeList noudeListEtapes = noeudEtape.GetElementsByTagName("etape");
+
+            Etapes = new ObservableCollection<Etape>();
+
+            foreach(XmlElement elementEtapeXml in noudeListEtapes)
             {
-                //IM NOT SURE ABOUT THIS
-                etape.FromXml(xmlElement);
+                Etape etape = new Etape(elementEtapeXml);
                 Etapes.Add(etape);
             }
         }
