@@ -40,7 +40,7 @@ namespace Kanban_BdeB
 
         public Tache()
         {
-            DateCreation = null;
+            DateCreation = DateOnly.FromDateTime(DateTime.Now);
             DateDebut = null;
             DateFin = null;
             Description = "";
