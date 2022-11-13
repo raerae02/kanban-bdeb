@@ -23,7 +23,12 @@ namespace Kanban_BdeB
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Commandes pour les buttons
+        //Commandes pour le menu
+        public static RoutedCommand FichierMenuCmd = new RoutedCommand();
+        public static RoutedCommand EditionMenuCmd = new RoutedCommand();
+        public static RoutedCommand AProposMenuCmd = new RoutedCommand();
+
+
 
         //Commande pour le menu Aide
         public static RoutedCommand AProposCmd = new RoutedCommand();
@@ -219,6 +224,36 @@ namespace Kanban_BdeB
             {
                 e.CanExecute = listBox.SelectedItem != null;
             }
+        }
+
+        private void FichierMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OuvrirMenu(MenuFichier);
+        }
+        private void FichierMenuCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void EditionMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OuvrirMenu(MenuEdition);
+        }
+        private void EditionMenuCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void AProposMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OuvrirMenu(MenuAPropos);
+        }
+        private void AProposMenuCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void OuvrirMenu(MenuItem menuItem)
+        {
+            menuItem.IsSubmenuOpen = true;
         }
     }
 }

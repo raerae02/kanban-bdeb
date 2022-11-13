@@ -13,6 +13,10 @@
         ResizeMode="CanMinimize">
 
     <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:MainWindow.FichierMenuCmd}" Executed="FichierMenuCmd_Executed" CanExecute="FichierMenuCmd_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.EditionMenuCmd}" Executed="EditionMenuCmd_Executed" CanExecute="EditionMenuCmd_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.AProposMenuCmd}" Executed="AProposMenuCmd_Executed" CanExecute="AProposMenuCmd_CanExecute"></CommandBinding>
+
         <CommandBinding Command="{x:Static local:MainWindow.AProposCmd}" Executed="APropos_Executed" CanExecute="APropos_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Executed="OuvrirFichier_Executed" CanExecute="OuvrirFichier_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.EnregistrerFichierCmd}" Executed="EnregistrerFichier_Executed" CanExecute="EnregistrerFichier_CanExecute"></CommandBinding>
@@ -23,6 +27,10 @@
     </Window.CommandBindings>
 
     <Window.InputBindings>
+        <KeyBinding Command="{x:Static local:MainWindow.FichierMenuCmd}" Gesture="ALT+F"></KeyBinding>
+        <KeyBinding Command="{x:Static local:MainWindow.EditionMenuCmd}" Gesture="ALT+D"></KeyBinding>
+        <KeyBinding Command="{x:Static local:MainWindow.AProposMenuCmd}" Gesture="ALT+A"></KeyBinding>
+        
         <KeyBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Gesture="CTRL+O"></KeyBinding>
         <KeyBinding Command="{x:Static local:MainWindow.EnregistrerFichierCmd}" Gesture="CTRL+S"></KeyBinding>
     </Window.InputBindings>
@@ -74,16 +82,16 @@
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" Style="{StaticResource StyleMenu}">
-            <MenuItem Header="Fichier" Style="{StaticResource StyleMenu}">
+            <MenuItem x:Name="MenuFichier" Header="Fichier" Style="{StaticResource StyleMenu}" Command="{x:Static local:MainWindow.FichierMenuCmd}">
                 <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.OuvrirFichierCmd}"></MenuItem>
                 <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.EnregistrerFichierCmd}"></MenuItem>
                 <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.EnregistrerSousFichierCmd}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Édition">
+            <MenuItem x:Name="MenuEdition" Header="Édition" Command="{x:Static local:MainWindow.EditionMenuCmd}">
                 <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.SupprimerTacheCmd}"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Aide">
-                <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>
+            <MenuItem x:Name="MenuAPropos" Header="Aide">
+                <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposMenuCmd}"></MenuItem>
             </MenuItem>
         </Menu>
         
