@@ -26,7 +26,7 @@ namespace Kanban_BdeB
         //Commandes pour le menu
         public static RoutedCommand FichierMenuCmd = new RoutedCommand();
         public static RoutedCommand EditionMenuCmd = new RoutedCommand();
-        public static RoutedCommand AProposMenuCmd = new RoutedCommand();
+        public static RoutedCommand AideMenuCmd = new RoutedCommand();
 
 
 
@@ -192,8 +192,13 @@ namespace Kanban_BdeB
         private void selectionChangeAction(ListBox listBox)
         {
             Tache tache = listBox.SelectedItem as Tache;
-            listBoxEtapes.ItemsSource = tache.Etapes;
-            DataContext = tache;
+            if (tache != null)
+            {
+                listBoxEtapes.ItemsSource = tache.Etapes;
+                DataContext = tache;
+            }
+            else listBox.SelectedItem = null;
+            
         }
         private void listBoxTachesPlanifiees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -242,11 +247,11 @@ namespace Kanban_BdeB
         {
             e.CanExecute = true;
         }
-        private void AProposMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void AideMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OuvrirMenu(MenuAPropos);
         }
-        private void AProposMenuCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void AideMenuCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
         }

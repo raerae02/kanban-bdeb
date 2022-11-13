@@ -15,7 +15,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="{x:Static local:MainWindow.FichierMenuCmd}" Executed="FichierMenuCmd_Executed" CanExecute="FichierMenuCmd_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.EditionMenuCmd}" Executed="EditionMenuCmd_Executed" CanExecute="EditionMenuCmd_CanExecute"></CommandBinding>
-        <CommandBinding Command="{x:Static local:MainWindow.AProposMenuCmd}" Executed="AProposMenuCmd_Executed" CanExecute="AProposMenuCmd_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.AideMenuCmd}" Executed="AideMenuCmd_Executed" CanExecute="AideMenuCmd_CanExecute"></CommandBinding>
 
         <CommandBinding Command="{x:Static local:MainWindow.AProposCmd}" Executed="APropos_Executed" CanExecute="APropos_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Executed="OuvrirFichier_Executed" CanExecute="OuvrirFichier_CanExecute"></CommandBinding>
@@ -29,7 +29,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{x:Static local:MainWindow.FichierMenuCmd}" Gesture="ALT+F"></KeyBinding>
         <KeyBinding Command="{x:Static local:MainWindow.EditionMenuCmd}" Gesture="ALT+D"></KeyBinding>
-        <KeyBinding Command="{x:Static local:MainWindow.AProposMenuCmd}" Gesture="ALT+A"></KeyBinding>
+        <KeyBinding Command="{x:Static local:MainWindow.AideMenuCmd}" Gesture="ALT+A"></KeyBinding>
         
         <KeyBinding Command="{x:Static local:MainWindow.OuvrirFichierCmd}" Gesture="CTRL+O"></KeyBinding>
         <KeyBinding Command="{x:Static local:MainWindow.EnregistrerFichierCmd}" Gesture="CTRL+S"></KeyBinding>
@@ -90,8 +90,8 @@
             <MenuItem x:Name="MenuEdition" Header="Édition" Command="{x:Static local:MainWindow.EditionMenuCmd}">
                 <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.SupprimerTacheCmd}"></MenuItem>
             </MenuItem>
-            <MenuItem x:Name="MenuAPropos" Header="Aide">
-                <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposMenuCmd}"></MenuItem>
+            <MenuItem x:Name="MenuAPropos" Header="Aide" Command="{x:Static local:MainWindow.AideMenuCmd}">
+                <MenuItem Header="À Propos..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.AProposCmd}"></MenuItem>
             </MenuItem>
         </Menu>
         
