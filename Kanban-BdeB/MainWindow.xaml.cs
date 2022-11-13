@@ -140,12 +140,19 @@ namespace Kanban_BdeB
         }
         private void EnregistrerFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //a changer
-            e.CanExecute = true;
+            e.CanExecute = taches.Count > 0;
         }
         private void SauvegarderTache(string nomFichier)
         {
+            XmlDocument xmlDocument = new XmlDocument();
+            XmlElement racine = xmlDocument.CreateElement("taches");
+            xmlDocument.AppendChild(racine);
 
+            foreach(Tache tache in taches)
+            {
+                racine.AppendChild(tache.ToXml(xmlDocument));
+            }
+            xmlDocument.Save(nomFichier);
         }
 
         //Methodes pour le bouton Enregistrer le fichier sous... 
@@ -164,8 +171,7 @@ namespace Kanban_BdeB
         }
         private void EnregistrerSousFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //a changer
-            e.CanExecute = true;
+            e.CanExecute = taches.Count > 0;
         }
 
         private void selectionChangeAction(ListBox listBox)

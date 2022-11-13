@@ -93,8 +93,19 @@ namespace Kanban_BdeB
             elementTache.SetAttribute("fin", DateFin.ToString());
 
             XmlElement elementDescription = xmlDocument.CreateElement("description");
-            elementDescription.SetAttribute("description", Description);
+            elementDescription.InnerText = Description.Trim();
+            elementTache.AppendChild(elementDescription);
+
+            XmlElement racineEtape = xmlDocument.CreateElement("etapes");
+
+            foreach (Etape etape in Etapes)
+            {
+                XmlElement elementEtape = etape.ToXml(xmlDocument);
+               racineEtape.AppendChild(elementEtape);
+            }
             
+            elementTache.AppendChild(racineEtape);
+
             return elementTache;
         }
         public override string ToString()

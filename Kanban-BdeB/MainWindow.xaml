@@ -74,7 +74,7 @@
             <MenuItem Header="Fichier" Style="{StaticResource StyleMenu}">
                 <MenuItem Header="Ouvrir" InputGestureText="Ctrl+O" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.OuvrirFichierCmd}"></MenuItem>
                 <MenuItem Header="Enregistrer" InputGestureText="Ctrl+S" Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.EnregistrerFichierCmd}"></MenuItem>
-                <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}"></MenuItem>
+                <MenuItem Header="Enregistrer sous..." Style="{StaticResource StyleSousMenu}" Command="{x:Static local:MainWindow.EnregistrerSousFichierCmd}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Édition">
                 <MenuItem Header="Supprimer la tâche" Style="{StaticResource StyleSousMenu}"></MenuItem>
