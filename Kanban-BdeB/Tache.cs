@@ -6,22 +6,23 @@ using System.Xml;
 using System.Threading.Tasks;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Kanban_BdeB
 {
     internal class Tache : IXMLSerializable
     {
-        public DateOnly DateCreation
+        public DateOnly? DateCreation
         {
             get;
             set;
         }
-        public DateOnly DateDebut
+        public DateOnly? DateDebut
         {
             get;
             set;
         }
-        public DateOnly DateFin
+        public DateOnly? DateFin
         {
             get;
             set;
@@ -39,9 +40,9 @@ namespace Kanban_BdeB
 
         public Tache()
         {
-            DateCreation = new DateOnly();
-            DateDebut = new DateOnly();
-            DateFin = new DateOnly();
+            DateCreation = null;
+            DateDebut = null;
+            DateFin = null;
             Description = "";
             Etapes = new ObservableCollection<Etape>();
         }
@@ -54,9 +55,20 @@ namespace Kanban_BdeB
 
         public void FromXml(XmlElement xmlElementTache)
         {
-            DateCreation = DateOnly.Parse(xmlElementTache.GetAttribute("creation"));
-            //DateDebut = DateOnly.Parse(xmlElementTache.GetAttribute("debut"));
-            //DateFin = DateOnly.Parse(xmlElementTache.GetAttribute("fin"));
+            string dateFormat = "yyyy-MM-dd";
+
+            if (DateOnly.TryParseExact(xmlElementTache.GetAttribute("creation"), dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly rdc))
+            {
+                DateCreation = rdc;
+            }
+            if (DateOnly.TryParseExact(xmlElementTache.GetAttribute("debut"), dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly rdd))
+            {
+                DateDebut = rdd;
+            }
+            if (DateOnly.TryParseExact(xmlElementTache.GetAttribute("fin"), dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateOnly rdf))
+            {
+                DateFin = rdf;
+            }
 
             XmlElement description = xmlElementTache["description"];
             Description = description.InnerText.Trim();

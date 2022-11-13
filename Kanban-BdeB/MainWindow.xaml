@@ -48,6 +48,8 @@
             <Setter Property="ItemsControl.Width" Value="400"></Setter>
             <Setter Property="ItemsControl.Height" Value="308"></Setter>
             <Setter Property="ItemsControl.Background" Value="#815B5B"></Setter>
+            <Setter Property="ItemsControl.Foreground" Value="#FFF8EA"></Setter>
+            <Setter Property="ItemsControl.FontFamily" Value="Monaco"></Setter>
         </Style>
         <Style x:Key="StyleTextBlockDate">
             <Setter Property="ItemsControl.Margin" Value="0,0,10,5"></Setter>
@@ -91,15 +93,15 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <WrapPanel Orientation="Vertical" Margin="10">
                     <TextBlock Style="{StaticResource StyleTitre}">Tâches planifiées</TextBlock>
-                    <ListBox x:Name="listBoxTachesPlanifiees" Style="{StaticResource StyleListBox}"></ListBox>
+                    <ListBox x:Name="listBoxTachesPlanifiees" SelectionChanged="listBoxTachesPlanifiees_SelectionChanged" Style="{StaticResource StyleListBox}"></ListBox>
                 </WrapPanel>
                 <WrapPanel Orientation="Vertical" Margin="10">
                     <TextBlock Style="{StaticResource StyleTitre}">Tâches en cours</TextBlock>
-                    <ListBox x:Name="listBoxTachesEnCours" Style="{StaticResource StyleListBox}"></ListBox>
+                    <ListBox x:Name="listBoxTachesEnCours" SelectionChanged="listBoxTachesEnCours_SelectionChanged" Style="{StaticResource StyleListBox}"></ListBox>
                 </WrapPanel>
                 <WrapPanel Orientation="Vertical" Margin="10">
                     <TextBlock Style="{StaticResource StyleTitre}">Tâches terminées</TextBlock>
-                    <ListBox x:Name="listBoxTachesTerminees" Style="{StaticResource StyleListBox}"></ListBox>
+                    <ListBox x:Name="listBoxTachesTerminees" SelectionChanged="listBoxTachesTerminees_SelectionChanged" Style="{StaticResource StyleListBox}"></ListBox>
                 </WrapPanel>
             </StackPanel>
 
@@ -114,9 +116,9 @@
                             <TextBlock Style="{StaticResource StyleTextBlockDate}">Date fin:</TextBlock>
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
-                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
-                            <TextBlock Style="{StaticResource StyleTextBlockDate}">18/01/2002</TextBlock>
+                            <TextBlock Text="{Binding DateCreation, Mode=OneWay}" Style="{StaticResource StyleTextBlockDate}"></TextBlock>
+                            <TextBlock Text="{Binding DateDebut, Mode=OneWay}" Style="{StaticResource StyleTextBlockDate}"></TextBlock>
+                            <TextBlock Text="{Binding DateFin, Mode=OneWay}" Style="{StaticResource StyleTextBlockDate}"></TextBlock>
                         </StackPanel>
                     </StackPanel>
 
@@ -132,7 +134,7 @@
                 <DockPanel VerticalAlignment="Stretch">
                     <StackPanel Orientation="Vertical">
                         <TextBlock DockPanel.Dock="Top" Style="{StaticResource StyleTitre}">Étapes de réalisation</TextBlock>
-                        <ListBox Style="{StaticResource StyleListBox}" Width="815" Height="240"></ListBox>
+                        <ListBox x:Name="listBoxEtapes" Style="{StaticResource StyleListBox}" Width="815" Height="240"></ListBox>
                         <StackPanel Orientation="Horizontal">
                             <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Terminer étape</Button>
                             <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Supprimer étape</Button>

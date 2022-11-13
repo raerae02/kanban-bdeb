@@ -39,14 +39,20 @@ namespace Kanban_BdeB
         private string pathFichier;
 
         //Listes
+        private List<Tache> taches;
         private ObservableCollection<Tache> lesTachesPlanifiees;
+        private ObservableCollection<Tache> lesTachesEnCours;
+        private ObservableCollection<Tache> lesTachesTerminees;
 
         public MainWindow()
         {
             dossierBase = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" + "Fichiers-3GP";
             pathFichier = dossierBase + DIR_SEPARATOR + "taches.xml";
 
+            taches = new List<Tache>();
             lesTachesPlanifiees = new ObservableCollection<Tache>();
+            lesTachesEnCours = new ObservableCollection<Tache>();
+            lesTachesTerminees= new ObservableCollection<Tache>();
 
             InitializeComponent();
         }
@@ -98,9 +104,33 @@ namespace Kanban_BdeB
             foreach(XmlElement xmlElementTache in nouedsTaches)
             {
                 Tache tache = new Tache(xmlElementTache);
-                lesTachesPlanifiees.Add(tache);
+                taches.Add(tache);
             }
-            listBoxTachesPlanifiees.ItemsSource = lesTachesPlanifiees;
+            ChargerListBoxTaches();
+        }
+        private void ChargerListBoxTaches()
+        {
+            if(taches.Count > 0)
+            {
+                foreach(Tache tache in taches)
+                {
+                    if (tache.DateCreation != null && tache.DateDebut == null && tache.DateFin == null)
+                    {
+                        lesTachesPlanifiees.Add(tache);
+                    }
+                    if (tache.DateCreation != null && tache.DateDebut != null && tache.DateFin == null)
+                    {
+                        lesTachesEnCours.Add(tache);
+                    }
+                    if (tache.DateCreation != null && tache.DateDebut != null && tache.DateFin != null)
+                    {
+                        lesTachesTerminees.Add(tache);
+                    }
+                }
+                listBoxTachesPlanifiees.ItemsSource = lesTachesPlanifiees;
+                listBoxTachesEnCours.ItemsSource = lesTachesEnCours;
+                listBoxTachesTerminees.ItemsSource = lesTachesTerminees;
+            }
         }
 
         //Methodes pour le bouton Enregister Fichier
@@ -137,5 +167,26 @@ namespace Kanban_BdeB
             //a changer
             e.CanExecute = true;
         }
+
+        private void selectionChangeAction(ListBox listBox)
+        {
+            Tache tache = listBox.SelectedItem as Tache;
+            listBoxEtapes.ItemsSource = tache.Etapes;
+            DataContext = tache;
+        }
+        private void listBoxTachesPlanifiees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectionChangeAction(listBoxTachesPlanifiees);
+        }
+
+        private void listBoxTachesEnCours_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectionChangeAction(listBoxTachesEnCours);
+        }
+        private void listBoxTachesTerminees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectionChangeAction(listBoxTachesTerminees);
+        }
+
     }
 }
