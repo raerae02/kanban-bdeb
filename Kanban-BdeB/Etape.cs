@@ -56,7 +56,11 @@ namespace Kanban_BdeB
         }
         public override string ToString()
         {
-            return DescriptionEtape;
+            if (EtapeTerminer)
+            {
+                return $"{DescriptionEtape} (terminée)";
+            }
+            else return DescriptionEtape;
         }
     }
 }
