@@ -40,6 +40,9 @@ namespace Kanban_BdeB
 
         public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();
 
+        public static RoutedCommand TerminerEtapeCmd = new RoutedCommand();
+
+
 
         //Utilaires pour XML
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
@@ -70,6 +73,7 @@ namespace Kanban_BdeB
             listBoxes.Add(listBoxTachesPlanifiees);
             listBoxes.Add(listBoxTachesEnCours);
             listBoxes.Add(listBoxTachesTerminees);
+            listBoxes.Add(listBoxEtapes);
         }
 
         //Methodes pour le bouton À propos
@@ -259,6 +263,33 @@ namespace Kanban_BdeB
         private void OuvrirMenu(MenuItem menuItem)
         {
             menuItem.IsSubmenuOpen = true;
+        }
+
+        /// <summary>
+        /// Methodes pour le bouton TerminerEtape
+        /// Ce bouton permet de terminer une etape selectionnée
+        /// </summary>
+        private void TerminerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            string strTerminer = " (terminée)";
+            Etape etape = listBoxEtapes.SelectedItem as Etape;
+
+            if (etape.EtapeTerminer == false)
+            {
+                etape.EtapeTerminer = true;
+                etape.DescriptionEtape += strTerminer;
+            }
+        }
+        private void TerminerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if(listBoxEtapes.SelectedItem != null)
+            {
+                Etape etape = listBoxEtapes.SelectedItem as Etape;
+                if(etape.EtapeTerminer == false)
+                {
+                    e.CanExecute = true;
+                }
+            }
         }
     }
 }

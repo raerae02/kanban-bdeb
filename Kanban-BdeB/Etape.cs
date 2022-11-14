@@ -56,9 +56,10 @@ namespace Kanban_BdeB
         }
         public override string ToString()
         {
-            if (EtapeTerminer)
+            string strTerminer = "(terminée)";
+            if (EtapeTerminer && !DescriptionEtape.Contains(strTerminer))
             {
-                return $"{DescriptionEtape} (terminée)";
+                return $"{DescriptionEtape} {strTerminer}";
             }
             else return DescriptionEtape;
         }
