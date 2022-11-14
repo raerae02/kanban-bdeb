@@ -40,9 +40,12 @@ namespace Kanban_BdeB
 
         public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();
 
+        //Commandes pour les boutons des Étapes
         public static RoutedCommand TerminerEtapeCmd = new RoutedCommand();
+        public static RoutedCommand SupprimerEtapeCmd = new RoutedCommand();
 
-
+        private Tache currentTache;
+        private Etape currentEtape;
 
         //Utilaires pour XML
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
@@ -62,6 +65,9 @@ namespace Kanban_BdeB
             dossierBase = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}{DIR_SEPARATOR}" + "Fichiers-3GP";
             pathFichier = dossierBase + DIR_SEPARATOR + "taches.xml";
 
+            currentTache = null;
+            currentEtape = null;
+
             taches = new List<Tache>();
             listBoxes = new List<ListBox>();
             lesTachesPlanifiees = new ObservableCollection<Tache>();
@@ -73,6 +79,7 @@ namespace Kanban_BdeB
             listBoxes.Add(listBoxTachesPlanifiees);
             listBoxes.Add(listBoxTachesEnCours);
             listBoxes.Add(listBoxTachesTerminees);
+
             listBoxes.Add(listBoxEtapes);
         }
 
@@ -195,11 +202,20 @@ namespace Kanban_BdeB
 
         private void selectionChangeAction(ListBox listBox)
         {
-            Tache tache = listBox.SelectedItem as Tache;
-            if (tache != null)
+            currentTache = listBox.SelectedItem as Tache;
+           // currentEtape = listBoxEtapes.SelectedItem as Etape;
+
+            if (currentTache != null)
             {
-                listBoxEtapes.ItemsSource = tache.Etapes;
-                DataContext = tache;
+                listBoxEtapes.ItemsSource = currentTache.Etapes;
+                DataContext = currentTache;
+
+                //foreach(Etape etape in listBoxEtapes.Items)
+                //{
+                //    listBoxEtapes.SelectedItem = currentEtape.EtapeTerminer == false;
+                //    //Do i need this
+                //    DataContext = currentEtape;
+                //}
             }
             else listBox.SelectedItem = null;
             
@@ -272,23 +288,40 @@ namespace Kanban_BdeB
         private void TerminerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string strTerminer = " (terminée)";
-            Etape etape = listBoxEtapes.SelectedItem as Etape;
+            currentEtape = listBoxEtapes.SelectedItem as Etape;
 
-            if (etape.EtapeTerminer == false)
+            if (currentEtape.EtapeTerminer == false)
             {
-                etape.EtapeTerminer = true;
-                etape.DescriptionEtape += strTerminer;
+                currentEtape.EtapeTerminer = true;
+                currentEtape.DescriptionEtape += strTerminer;
             }
         }
         private void TerminerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if(listBoxEtapes.SelectedItem != null)
             {
-                Etape etape = listBoxEtapes.SelectedItem as Etape;
-                if(etape.EtapeTerminer == false)
+                currentEtape = listBoxEtapes.SelectedItem as Etape;
+                if(currentEtape.EtapeTerminer == false)
                 {
                     e.CanExecute = true;
                 }
+            }
+        }
+        /// <summary>
+        /// Methodes pour le bouton SupprimerEtape
+        /// Ce bouton permet de supprimer une etape selectionée
+        /// </summary>
+        private void SupprimerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            currentEtape = listBoxEtapes.SelectedItem as Etape;
+            currentTache.Etapes.Remove(currentEtape);
+        }
+        private void SupprimerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            currentEtape = listBoxEtapes.SelectedItem as Etape;
+            if (currentTache != null && currentEtape.EtapeTerminer == false)
+            {
+                e.CanExecute = true;
             }
         }
     }

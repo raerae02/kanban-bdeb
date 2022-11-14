@@ -25,6 +25,7 @@
         <CommandBinding Command="{x:Static local:MainWindow.SupprimerTacheCmd}" Executed="SupprimerTacheCmd_Executed" CanExecute="SupprimerTacheCmd_CanExecute"></CommandBinding>
 
         <CommandBinding Command="{x:Static local:MainWindow.TerminerEtapeCmd}" Executed="TerminerEtape_Executed" CanExecute="TerminerEtape_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.SupprimerEtapeCmd}" Executed="SupprimerEtape_Executed" CanExecute="SupprimerEtape_CanExecute"></CommandBinding>
 
     </Window.CommandBindings>
 
@@ -150,7 +151,7 @@
                         <ListBox x:Name="listBoxEtapes" Style="{StaticResource StyleListBox}" Width="815" Height="240"></ListBox>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="TerminerEtape" Margin="10" Style="{StaticResource StyleButton}" Width="100" Command="{x:Static local:MainWindow.TerminerEtapeCmd}">Terminer étape</Button>
-                            <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Supprimer étape</Button>
+                            <Button Margin="10" Style="{StaticResource StyleButton}" Width="100" Command="{x:Static local:MainWindow.SupprimerEtapeCmd}">Supprimer étape</Button>
                             <TextBox Style="{StaticResource StyleTextBox}" Width="455"></TextBox>
                             <Button Margin="10" Style="{StaticResource StyleButton}" Width="100">Ajouter étape</Button>
                         </StackPanel>
