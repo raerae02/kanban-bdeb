@@ -305,7 +305,7 @@ namespace Kanban_BdeB
         private void TerminerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             currentEtape.EtapeTerminer = true;
-            if(currentTache.DateDebut == null)
+            if (currentTache.DateDebut == null)
             {
                 currentTache.DateDebut = DateOnly.FromDateTime(DateTime.Now);
             }
@@ -318,12 +318,20 @@ namespace Kanban_BdeB
         }
         private void TerminerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if(listBoxEtapes.SelectedItem != null)
+            if (currentEtape != null)
             {
-                currentEtape = listBoxEtapes.SelectedItem as Etape;
-                if(currentEtape.EtapeTerminer == false)
+                int indexEtape = -1;
+                foreach (Etape etape in currentTache.Etapes)
                 {
-                    e.CanExecute = true;
+                    if(etape.EtapeTerminer == false)
+                    {
+                        indexEtape = currentTache.Etapes.IndexOf(etape);
+                        break;
+                    }
+                }
+                if (indexEtape > -1)
+                {
+                    e.CanExecute = indexEtape == currentTache.Etapes.IndexOf(currentEtape);
                 }
             }
         }
@@ -335,16 +343,16 @@ namespace Kanban_BdeB
             int doneCount = 0;
             int allCount = currentTache.Etapes.Count;
 
-            foreach(Etape etape in currentTache.Etapes)
+            foreach (Etape etape in currentTache.Etapes)
             {
-                if(etape.EtapeTerminer == true)
+                if (etape.EtapeTerminer == true)
                 {
                     doneCount += 1;
                 }
             }
             if(doneCount == allCount)
             {
-                if(currentTache.DateFin == null)
+                if (currentTache.DateFin == null)
                 {
                     currentTache.DateFin = DateOnly.FromDateTime(DateTime.Now);
                 }
