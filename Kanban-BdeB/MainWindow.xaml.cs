@@ -54,6 +54,7 @@ namespace Kanban_BdeB
 
         //Listes
         private List<Tache> taches;
+        private List<ObservableCollection<Tache>> listObservableCollections;
 
         private List<ListBox> listBoxes;
         private ObservableCollection<Tache> lesTachesPlanifiees;
@@ -70,6 +71,7 @@ namespace Kanban_BdeB
 
             taches = new List<Tache>();
             listBoxes = new List<ListBox>();
+            listObservableCollections = new List<ObservableCollection<Tache>>();
             lesTachesPlanifiees = new ObservableCollection<Tache>();
             lesTachesEnCours = new ObservableCollection<Tache>();
             lesTachesTerminees = new ObservableCollection<Tache>();
@@ -79,8 +81,11 @@ namespace Kanban_BdeB
             listBoxes.Add(listBoxTachesPlanifiees);
             listBoxes.Add(listBoxTachesEnCours);
             listBoxes.Add(listBoxTachesTerminees);
-
             listBoxes.Add(listBoxEtapes);
+
+            listObservableCollections.Add(lesTachesPlanifiees);
+            listObservableCollections.Add(lesTachesEnCours);
+            listObservableCollections.Add(lesTachesTerminees);
         }
 
         //Methodes pour le bouton À propos
@@ -234,21 +239,31 @@ namespace Kanban_BdeB
             selectionChangeAction(listBoxTachesTerminees);
         }
 
-
+        /// <summary>
+        /// Methodes pour le bouton SupprimerTache
+        /// Ce bouton permet de supprimer une tache selectionnée
+        /// Elle est active seulement quand une tache est selectionnée
+        /// </summary>
         private void SupprimerTacheCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            foreach(ListBox listBox in listBoxes)
+            taches.Remove(currentTache);
+            ObservableCollection<Tache> currentObservableCollection = null;
+            foreach(ObservableCollection<Tache> observableCollection in listObservableCollections)
             {
-                taches.Remove(listBox.SelectedItem as Tache);
+                if (observableCollection.Contains(currentTache))
+                {
+                    currentObservableCollection = observableCollection;
+                    break;
+                }
             }
-            
+            if(currentObservableCollection != null)
+            {
+                currentObservableCollection.Remove(currentTache);
+            }
         }
         private void SupprimerTacheCmd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            foreach(ListBox listBox in listBoxes)
-            {
-                e.CanExecute = listBox.SelectedItem != null;
-            }
+            e.CanExecute = currentTache !=null;
         }
 
         private void FichierMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -318,11 +333,11 @@ namespace Kanban_BdeB
         }
         private void SupprimerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            currentEtape = listBoxEtapes.SelectedItem as Etape;
-            if (currentTache != null && currentEtape.EtapeTerminer == false)
-            {
+            //currentEtape = listBoxEtapes.SelectedItem as Etape;
+            //if (currentTache != null && currentEtape.EtapeTerminer == false)
+            //{
                 e.CanExecute = true;
-            }
+            //}
         }
     }
 }
