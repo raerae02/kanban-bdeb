@@ -428,19 +428,17 @@ namespace Kanban_BdeB
         /// <summary>
         /// Methodes pour le bouton SupprimerEtape
         /// Ce bouton permet de supprimer une etape selectionée
+        /// Une etape terminée ne peut pas etre supprimée
+        /// Si l'etape est la derniere non terminee, une suppression de cette derniere completera la tache
         /// </summary>
         private void SupprimerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            currentEtape = listBoxEtapes.SelectedItem as Etape;
             currentTache.Etapes.Remove(currentEtape);
+            AllTachesTermineesAction();
         }
         private void SupprimerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //currentEtape = listBoxEtapes.SelectedItem as Etape;
-            //if (currentTache != null && currentEtape.EtapeTerminer == false)
-            //{
-                e.CanExecute = true;
-            //}
+            e.CanExecute = currentEtape != null;
         }
     }
 }
