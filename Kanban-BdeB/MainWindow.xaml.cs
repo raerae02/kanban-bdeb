@@ -34,14 +34,16 @@ namespace Kanban_BdeB
         //Commande pour le menu Aide
         public static RoutedCommand AProposCmd = new RoutedCommand();
 
-        //Commande pour le menu Fichier
+        //Commandes pour le menu Fichier
         public static RoutedCommand OuvrirFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerSousFichierCmd = new RoutedCommand();
 
+        //Commandes pour la gestion des Taches
         public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();
+        public static RoutedCommand AjouterTacheCmd = new RoutedCommand();
 
-        //Commandes pour les boutons des Étapes
+        //Commandes pour la gestion des Étapes
         public static RoutedCommand TerminerEtapeCmd = new RoutedCommand();
         public static RoutedCommand SupprimerEtapeCmd = new RoutedCommand();
 
@@ -316,6 +318,45 @@ namespace Kanban_BdeB
             menuItem.IsSubmenuOpen = true;
         }
 
+        /// <summary>
+        /// Methodes pour le bouton Ajouter Tache
+        /// Ce bouton permet de créer une nouvelle tache qui sera ajouté à la liste des taches planifiées
+        /// Une nouvelle tache peut ne pas contenir des étapes
+        /// Cette nouvelle tache deviendra la tache active
+        /// </summary>
+        private void AjouterTache_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Tache tache = new Tache();
+            tache.Description = inputTache.Text;
+            tache.DateCreation = DateOnly.FromDateTime(DateTime.Now);
+            tache.DateDebut = null;
+            tache.DateFin = null;
+            tache.Etapes = new ObservableCollection<Etape>();
+
+            if (taches.Count > 0)
+            {
+                taches.Add(tache);
+                lesTachesPlanifiees.Add(tache);
+            }
+            else
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                taches.Add(tache);
+                lesTachesPlanifiees.Add(tache);
+                XmlElement racine = xmlDocument.CreateElement("taches");
+                xmlDocument.AppendChild(racine);
+
+                foreach (Tache tache1 in taches)
+                {
+                    racine.AppendChild(tache1.ToXml(xmlDocument));
+                }
+                ChargerListBoxTaches();
+            }
+        }
+        private void AjouterTache_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = inputTache.Text != "";
+        }
         /// <summary>
         /// Methodes pour le bouton TerminerEtape
         /// Ce bouton permet de terminer une etape selectionnée

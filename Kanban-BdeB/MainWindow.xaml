@@ -23,6 +23,7 @@
         <CommandBinding Command="{x:Static local:MainWindow.EnregistrerSousFichierCmd}" Executed="EnregistrerSousFichier_Executed" CanExecute="EnregistrerSousFichier_CanExecute"></CommandBinding>
 
         <CommandBinding Command="{x:Static local:MainWindow.SupprimerTacheCmd}" Executed="SupprimerTacheCmd_Executed" CanExecute="SupprimerTacheCmd_CanExecute"></CommandBinding>
+        <CommandBinding Command="{x:Static local:MainWindow.AjouterTacheCmd}" Executed="AjouterTache_Executed" CanExecute="AjouterTache_CanExecute"></CommandBinding>
 
         <CommandBinding Command="{x:Static local:MainWindow.TerminerEtapeCmd}" Executed="TerminerEtape_Executed" CanExecute="TerminerEtape_CanExecute"></CommandBinding>
         <CommandBinding Command="{x:Static local:MainWindow.SupprimerEtapeCmd}" Executed="SupprimerEtape_Executed" CanExecute="SupprimerEtape_CanExecute"></CommandBinding>
@@ -139,8 +140,8 @@
                     <StackPanel Margin="0,20">
                         <TextBlock Style="{StaticResource StyleTitre}">Creation d'une nouvelle tâche:</TextBlock>
                         <WrapPanel Orientation="Horizontal" Margin="0,5,10,5">
-                            <TextBox Style="{StaticResource StyleTextBox}" Margin="0,0,10,5" Width="290"></TextBox>
-                            <Button Style="{StaticResource StyleButton}" Margin="0,0,15,5">Ajouter tâche</Button>
+                            <TextBox x:Name="inputTache"  Style="{StaticResource StyleTextBox}" Margin="0,0,10,5" Width="290"></TextBox>
+                            <Button Style="{StaticResource StyleButton}" Margin="0,0,15,5" Command="{x:Static local:MainWindow.AjouterTacheCmd}">Ajouter tâche</Button>
                         </WrapPanel>
                     </StackPanel>
                 </WrapPanel>
