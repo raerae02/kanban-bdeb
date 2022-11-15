@@ -29,23 +29,23 @@ namespace Kanban_BdeB
         public static RoutedCommand EditionMenuCmd = new RoutedCommand();
         public static RoutedCommand AideMenuCmd = new RoutedCommand();
 
-
-
-        //Commande pour le menu Aide
+        //Commande pour le sousmenu Aide
         public static RoutedCommand AProposCmd = new RoutedCommand();
 
-        //Commandes pour le menu Fichier
+        //Commandes pour le sousmenu Fichier
         public static RoutedCommand OuvrirFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerFichierCmd = new RoutedCommand();
         public static RoutedCommand EnregistrerSousFichierCmd = new RoutedCommand();
 
         //Commandes pour la gestion des Taches
-        public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();
+        public static RoutedCommand SupprimerTacheCmd = new RoutedCommand();        //sousmenu Edition
         public static RoutedCommand AjouterTacheCmd = new RoutedCommand();
 
         //Commandes pour la gestion des Étapes
         public static RoutedCommand TerminerEtapeCmd = new RoutedCommand();
         public static RoutedCommand SupprimerEtapeCmd = new RoutedCommand();
+        public static RoutedCommand AjouterEtapeCmd = new RoutedCommand();
+
 
         private Tache currentTache;
         private Etape currentEtape;
@@ -439,6 +439,27 @@ namespace Kanban_BdeB
         private void SupprimerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = currentEtape != null;
+        }
+
+        /// <summary>
+        /// Methodes pour le bouton AjouterEtape
+        /// Ce bouton permet l'ajout d'une etape à une tache selectionnée
+        /// Une etape ne peut pas etre ajoutee dans une tache completée
+        /// </summary>
+        private void AjouterEtape_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Etape etape = new Etape();
+            etape.DescriptionEtape = inputEtape.Text;
+            etape.NumeroEtape = currentTache.Etapes.Count + 1;
+            etape.EtapeTerminer = false;
+            if (currentTache.Etapes != null)
+            {
+                currentTache.Etapes.Add(etape);
+            }
+        }
+        private void AjouterEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = inputEtape.Text != "" && currentTache != null && lesTachesTerminees.Contains(currentTache) != true;
         }
     }
 }
