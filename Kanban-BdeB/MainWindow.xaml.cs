@@ -15,6 +15,7 @@ using System.Xml;
 using System.IO;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using Microsoft.VisualBasic;
 
 namespace Kanban_BdeB
 {
@@ -56,7 +57,7 @@ namespace Kanban_BdeB
         private List<Tache> taches;
         private List<ObservableCollection<Tache>> listObservableCollections;
 
-        private List<ListBox> listBoxes;
+        private List<ListBox> listBoxesTache;
         private ObservableCollection<Tache> lesTachesPlanifiees;
         private ObservableCollection<Tache> lesTachesEnCours;
         private ObservableCollection<Tache> lesTachesTerminees;
@@ -70,7 +71,7 @@ namespace Kanban_BdeB
             currentEtape = null;
 
             taches = new List<Tache>();
-            listBoxes = new List<ListBox>();
+            listBoxesTache = new List<ListBox>();
             listObservableCollections = new List<ObservableCollection<Tache>>();
             lesTachesPlanifiees = new ObservableCollection<Tache>();
             lesTachesEnCours = new ObservableCollection<Tache>();
@@ -78,10 +79,9 @@ namespace Kanban_BdeB
 
             InitializeComponent();
 
-            listBoxes.Add(listBoxTachesPlanifiees);
-            listBoxes.Add(listBoxTachesEnCours);
-            listBoxes.Add(listBoxTachesTerminees);
-            listBoxes.Add(listBoxEtapes);
+            listBoxesTache.Add(listBoxTachesPlanifiees);
+            listBoxesTache.Add(listBoxTachesEnCours);
+            listBoxesTache.Add(listBoxTachesTerminees);
 
             listObservableCollections.Add(lesTachesPlanifiees);
             listObservableCollections.Add(lesTachesEnCours);
@@ -205,25 +205,23 @@ namespace Kanban_BdeB
             e.CanExecute = taches.Count > 0;
         }
 
-        private void selectionChangeAction(ListBox listBox)
+        private void selectionChangeAction(ListBox myListBox)
         {
-            currentTache = listBox.SelectedItem as Tache;
-           // currentEtape = listBoxEtapes.SelectedItem as Etape;
-
-            if (currentTache != null)
+            Tache tache = myListBox.SelectedItem as Tache;
+            if (tache != null)
             {
-                listBoxEtapes.ItemsSource = currentTache.Etapes;
+                currentTache = tache;
+                myListBox.SelectedItem = currentTache;
                 DataContext = currentTache;
 
-                //foreach(Etape etape in listBoxEtapes.Items)
-                //{
-                //    listBoxEtapes.SelectedItem = currentEtape.EtapeTerminer == false;
-                //    //Do i need this
-                //    DataContext = currentEtape;
-                //}
+                foreach (ListBox listBox in listBoxesTache)
+                {
+                    if(listBox != myListBox)
+                    {
+                        listBox.SelectedItem = null;
+                    }
+                }
             }
-            else listBox.SelectedItem = null;
-            
         }
         private void listBoxTachesPlanifiees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
