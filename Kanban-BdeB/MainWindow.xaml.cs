@@ -141,9 +141,9 @@ namespace Kanban_BdeB
         }
         private void ChargerListBoxTaches()
         {
-            if(taches.Count > 0)
+            if (taches.Count > 0)
             {
-                foreach(Tache tache in taches)
+                foreach (Tache tache in taches)
                 {
                     if (tache.DateCreation != null && tache.DateDebut == null && tache.DateFin == null)
                     {
@@ -204,7 +204,9 @@ namespace Kanban_BdeB
         {
             e.CanExecute = taches.Count > 0;
         }
-
+        /// <summary>
+        /// Cette methode sert à selectionner une tache a la fois entre les trois listbox de la gestion des taches
+        /// </summary>
         private void selectionChangeAction(ListBox myListBox)
         {
             Tache tache = myListBox.SelectedItem as Tache;
@@ -213,6 +215,7 @@ namespace Kanban_BdeB
                 currentTache = tache;
                 myListBox.SelectedItem = currentTache;
                 DataContext = currentTache;
+                getSelectedEtape();
 
                 foreach (ListBox listBox in listBoxesTache)
                 {
@@ -223,6 +226,20 @@ namespace Kanban_BdeB
                 }
             }
         }
+
+        private void getSelectedEtape()
+        {
+            foreach (Etape etape in currentTache.Etapes)
+            {
+                if (etape.EtapeTerminer == false)
+                {
+                    currentEtape = etape;
+                    listBoxEtapes.SelectedItem = currentEtape;
+                    break;
+                }
+            }
+        }
+
         private void listBoxTachesPlanifiees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectionChangeAction(listBoxTachesPlanifiees);
@@ -235,6 +252,11 @@ namespace Kanban_BdeB
         private void listBoxTachesTerminees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectionChangeAction(listBoxTachesTerminees);
+        }
+
+        private void listBoxEtapes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            currentEtape = listBoxEtapes.SelectedItem as Etape;
         }
 
         /// <summary>

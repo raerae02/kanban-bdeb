@@ -148,7 +148,7 @@
                 <DockPanel VerticalAlignment="Stretch">
                     <StackPanel Orientation="Vertical">
                         <TextBlock DockPanel.Dock="Top" Style="{StaticResource StyleTitre}">Étapes de réalisation</TextBlock>
-                        <ListBox x:Name="listBoxEtapes" Style="{StaticResource StyleListBox}" Width="815" Height="240"></ListBox>
+                        <ListBox x:Name="listBoxEtapes" Style="{StaticResource StyleListBox}" Width="815" Height="240" SelectionChanged="listBoxEtapes_SelectionChanged" ItemsSource="{Binding Etapes, Mode=OneWay}"></ListBox>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="TerminerEtape" Margin="10" Style="{StaticResource StyleButton}" Width="100" Command="{x:Static local:MainWindow.TerminerEtapeCmd}">Terminer étape</Button>
                             <Button Margin="10" Style="{StaticResource StyleButton}" Width="100" Command="{x:Static local:MainWindow.SupprimerEtapeCmd}">Supprimer étape</Button>
