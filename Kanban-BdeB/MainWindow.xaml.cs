@@ -299,17 +299,22 @@ namespace Kanban_BdeB
         /// <summary>
         /// Methodes pour le bouton TerminerEtape
         /// Ce bouton permet de terminer une etape selectionnée
+        /// Doit etre la premiere etape non terminée sinon le bouton est desactivé
+        /// Peut deplacer une tache entre les listbox si toutes ses etapes sont terminées
         /// </summary>
         private void TerminerEtape_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            string strTerminer = " (terminée)";
-            currentEtape = listBoxEtapes.SelectedItem as Etape;
-
-            if (currentEtape.EtapeTerminer == false)
+            currentEtape.EtapeTerminer = true;
+            if(currentTache.DateDebut == null)
             {
-                currentEtape.EtapeTerminer = true;
-                currentEtape.DescriptionEtape += strTerminer;
+                currentTache.DateDebut = DateOnly.FromDateTime(DateTime.Now);
             }
+            if (lesTachesPlanifiees.Contains(currentTache))
+            {
+                lesTachesPlanifiees.Remove(currentTache);
+                lesTachesEnCours.Add(currentTache);
+            }
+            AllTachesTermineesAction();
         }
         private void TerminerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -322,6 +327,35 @@ namespace Kanban_BdeB
                 }
             }
         }
+        /// <summary>
+        /// Cette methode sert a verifier que si toutes les etapes sont terminées. Si cela est le cas, la tache passera du listbox TachesEnCours au listbox TachesTerminée
+        /// </summary>
+        private void AllTachesTermineesAction()
+        {
+            int doneCount = 0;
+            int allCount = currentTache.Etapes.Count;
+
+            foreach(Etape etape in currentTache.Etapes)
+            {
+                if(etape.EtapeTerminer == true)
+                {
+                    doneCount += 1;
+                }
+            }
+            if(doneCount == allCount)
+            {
+                if(currentTache.DateFin == null)
+                {
+                    currentTache.DateFin = DateOnly.FromDateTime(DateTime.Now);
+                }
+                if (lesTachesEnCours.Contains(currentTache))
+                {
+                    lesTachesEnCours.Remove(currentTache);
+                    lesTachesTerminees.Add(currentTache);
+                }
+            }
+        }
+
         /// <summary>
         /// Methodes pour le bouton SupprimerEtape
         /// Ce bouton permet de supprimer une etape selectionée
