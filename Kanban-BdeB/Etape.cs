@@ -37,6 +37,9 @@ namespace Kanban_BdeB
             FromXml(elementEtape);
         }
 
+        /// <summary>
+        /// Recuperation de l'element xml et classer ses données dans les attributs de la classe Tache
+        /// </summary>
         public void FromXml(XmlElement xmlElement)
         {
             EtapeTerminer = Boolean.Parse(xmlElement.GetAttribute("termine"));
@@ -44,7 +47,9 @@ namespace Kanban_BdeB
             DescriptionEtape = xmlElement.InnerText.Trim();
 
         }
-
+        /// <summary>
+        /// Recuperation du document xml et retourner un element xml representant un objet (tache)    
+        /// </summary>
         public XmlElement ToXml(XmlDocument xmlDocument)
         {
             XmlElement elementEtape = xmlDocument.CreateElement("etape");

@@ -16,11 +16,12 @@ using System.IO;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using Microsoft.VisualBasic;
+using Path = System.IO.Path;
 
 namespace Kanban_BdeB
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logique pour MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -46,7 +47,7 @@ namespace Kanban_BdeB
         public static RoutedCommand SupprimerEtapeCmd = new RoutedCommand();
         public static RoutedCommand AjouterEtapeCmd = new RoutedCommand();
 
-
+        //Objets
         private Tache currentTache;
         private Etape currentEtape;
 
@@ -54,11 +55,11 @@ namespace Kanban_BdeB
         private char DIR_SEPARATOR = Path.DirectorySeparatorChar;
         private string dossierBase;
         private string pathFichier;
+        private bool? openResult;
 
         //Listes
-        private List<Tache> taches;
+        private List<Tache> taches;                                             
         private List<ObservableCollection<Tache>> listObservableCollections;
-
         private List<ListBox> listBoxesTache;
         private ObservableCollection<Tache> lesTachesPlanifiees;
         private ObservableCollection<Tache> lesTachesEnCours;
@@ -90,7 +91,10 @@ namespace Kanban_BdeB
             listObservableCollections.Add(lesTachesTerminees);
         }
 
-        //Methodes pour le bouton À propos
+        /// <summary>
+        /// Methodes pour le bouton APropos
+        /// Affiche la version de l'application
+        /// </summary>
         private void APropos_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show(
@@ -104,7 +108,10 @@ namespace Kanban_BdeB
             e.CanExecute = true;
         }
 
-        //Methodes pour le bouton Ouvrir Fichier
+        /// <summary>
+        /// Methodes pour le bouton OuvrirFichier
+        /// Permet l'ouverture d'une fichier xml et charger les taches dans les 3 listbox
+        /// </summary>
         private void OuvrirFichier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OuvrirFichier();
@@ -113,19 +120,21 @@ namespace Kanban_BdeB
         {
             e.CanExecute = true;
         }
+        //Methode principale pour l'ouverture d'un fichier
         private void OuvrirFichier()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "xml files (*.xml)|*.xml";
             openFileDialog.InitialDirectory = dossierBase;
-            bool? resultat = openFileDialog.ShowDialog();
+            openResult = openFileDialog.ShowDialog();
 
-            if (resultat.HasValue && resultat.Value)
+            if (openResult.HasValue && openResult.Value)
             {
                 pathFichier = openFileDialog.FileName;
                 ChargerTaches(pathFichier);
             }
         }
+        //Methode principale pour le chargement des taches 
         private void ChargerTaches(string pathFichier)
         {
             XmlDocument xmlDocument = new XmlDocument();
@@ -133,6 +142,7 @@ namespace Kanban_BdeB
             XmlElement racine = xmlDocument.DocumentElement;
 
             //Chargement des taches
+            taches.Clear();
             XmlNodeList nouedsTaches = racine.GetElementsByTagName("tache");
             foreach(XmlElement xmlElementTache in nouedsTaches)
             {
@@ -141,10 +151,15 @@ namespace Kanban_BdeB
             }
             ChargerListBoxTaches();
         }
+        //Methode principale pour afficher les taches dans les 3 listbox
         private void ChargerListBoxTaches()
         {
             if (taches.Count > 0)
             {
+                foreach (var observableCollection in listObservableCollections)
+                {
+                    observableCollection.Clear();
+                }
                 foreach (Tache tache in taches)
                 {
                     if (tache.DateCreation != null && tache.DateDebut == null && tache.DateFin == null)
@@ -160,88 +175,65 @@ namespace Kanban_BdeB
                         lesTachesTerminees.Add(tache);
                     }
                 }
-                listBoxTachesPlanifiees.ItemsSource = lesTachesPlanifiees;
-                listBoxTachesEnCours.ItemsSource = lesTachesEnCours;
-                listBoxTachesTerminees.ItemsSource = lesTachesTerminees;
+                for (int i = 0; i < 3; i++)
+                {
+                    listBoxesTache[i].ItemsSource = listObservableCollections[i];
+                }
             }
         }
 
-        //Methodes pour le bouton Enregister Fichier
+        /// <summary>
+        /// Methodes pour le bouton EnregistrerFichier et EnregistrerSousFichier
+        /// Conserver les changement faits dans un fichier ouvert
+        /// Un fichier doit etre ouvert ou un enregistrement sous a ete fait pour que l'option soit active
+        /// </summary>
         private void EnregistrerFichier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SauvegarderTache(pathFichier);
+            SauvegarderTache();
         }
         private void EnregistrerFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = taches.Count > 0;
+            e.CanExecute = openResult.HasValue && openResult.Value;
         }
-        private void SauvegarderTache(string nomFichier)
-        {
-            XmlDocument xmlDocument = new XmlDocument();
-            XmlElement racine = xmlDocument.CreateElement("taches");
-            xmlDocument.AppendChild(racine);
-
-            foreach(Tache tache in taches)
-            {
-                racine.AppendChild(tache.ToXml(xmlDocument));
-            }
-            xmlDocument.Save(nomFichier);
-        }
-
-        //Methodes pour le bouton Enregistrer le fichier sous... 
         private void EnregistrerSousFichier_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "xml files (*.xml)|*.xml";
             saveFileDialog.InitialDirectory = dossierBase;
-            bool? resultat = saveFileDialog.ShowDialog();
+            openResult = saveFileDialog.ShowDialog();
 
-            if (resultat.HasValue && resultat.Value)
+            if (openResult.HasValue && openResult.Value)
             {
                 pathFichier = saveFileDialog.FileName;
-                SauvegarderTache(pathFichier);
+                SauvegarderTache();
             }
         }
         private void EnregistrerSousFichier_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = taches.Count > 0;
         }
+        //Methode principale pour la sauvegarde des taches
+        private void SauvegarderTache()
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            intialiserTache(xmlDocument);
+            xmlDocument.Save(pathFichier);
+        }
+        //Methode principale pour l'intialisation des taches
+        private void intialiserTache(XmlDocument xmlDocument)
+        {
+            XmlElement racine = xmlDocument.CreateElement("taches");
+            xmlDocument.AppendChild(racine);
+
+            foreach (Tache tache in taches)
+            {
+                racine.AppendChild(tache.ToXml(xmlDocument));
+            }
+        }
+
         /// <summary>
-        /// Cette methode sert à selectionner une tache a la fois entre les trois listbox de la gestion des taches
+        /// Ces methodes permettent le changement de selection entre les elements des listboxes
         /// </summary>
-        private void selectionChangeAction(ListBox myListBox)
-        {
-            Tache tache = myListBox.SelectedItem as Tache;
-            if (tache != null)
-            {
-                currentTache = tache;
-                myListBox.SelectedItem = currentTache;
-                DataContext = currentTache;
-                getSelectedEtape();
-
-                foreach (ListBox listBox in listBoxesTache)
-                {
-                    if(listBox != myListBox)
-                    {
-                        listBox.SelectedItem = null;
-                    }
-                }
-            }
-        }
-
-        private void getSelectedEtape()
-        {
-            foreach (Etape etape in currentTache.Etapes)
-            {
-                if (etape.EtapeTerminer == false)
-                {
-                    currentEtape = etape;
-                    listBoxEtapes.SelectedItem = currentEtape;
-                    break;
-                }
-            }
-        }
-
         private void listBoxTachesPlanifiees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectionChangeAction(listBoxTachesPlanifiees);
@@ -259,6 +251,39 @@ namespace Kanban_BdeB
         private void listBoxEtapes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             currentEtape = listBoxEtapes.SelectedItem as Etape;
+        }
+        // Methode principale qui sert à selectionner une tache a la fois entre les trois listbox de la gestion des taches
+        private void selectionChangeAction(ListBox myListBox)
+        {
+            Tache tache = myListBox.SelectedItem as Tache;
+            if (tache != null)
+            {
+                currentTache = tache;
+                myListBox.SelectedItem = currentTache;
+                DataContext = currentTache;
+                getSelectedEtape();
+
+                foreach (ListBox listBox in listBoxesTache)
+                {
+                    if (listBox != myListBox)
+                    {
+                        listBox.SelectedItem = null;
+                    }
+                }
+            }
+        }
+        // Methode principale qui sert à selectionner la premiere étape non terminée par defaut
+        private void getSelectedEtape()
+        {
+            foreach (Etape etape in currentTache.Etapes)
+            {
+                if (etape.EtapeTerminer == false)
+                {
+                    currentEtape = etape;
+                    listBoxEtapes.SelectedItem = currentEtape;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -288,6 +313,10 @@ namespace Kanban_BdeB
             e.CanExecute = currentTache !=null;
         }
 
+        /// <summary>
+        /// Methodes qui permettent d'utiliser les raccouris pour le menu
+        /// </summary>
+        // Menu fichier (ALT+F)
         private void FichierMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OuvrirMenu(MenuFichier);
@@ -296,6 +325,7 @@ namespace Kanban_BdeB
         {
             e.CanExecute = true;
         }
+        //Menu Edition (ALT+D)
         private void EditionMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OuvrirMenu(MenuEdition);
@@ -304,6 +334,7 @@ namespace Kanban_BdeB
         {
             e.CanExecute = true;
         }
+        //Menu Aide (ALT+A)
         private void AideMenuCmd_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             OuvrirMenu(MenuAPropos);
@@ -312,7 +343,7 @@ namespace Kanban_BdeB
         {
             e.CanExecute = true;
         }
-
+        //Methode principale
         private void OuvrirMenu(MenuItem menuItem)
         {
             menuItem.IsSubmenuOpen = true;
@@ -343,13 +374,7 @@ namespace Kanban_BdeB
                 XmlDocument xmlDocument = new XmlDocument();
                 taches.Add(tache);
                 lesTachesPlanifiees.Add(tache);
-                XmlElement racine = xmlDocument.CreateElement("taches");
-                xmlDocument.AppendChild(racine);
-
-                foreach (Tache tache1 in taches)
-                {
-                    racine.AppendChild(tache1.ToXml(xmlDocument));
-                }
+                intialiserTache(xmlDocument);
                 ChargerListBoxTaches();
             }
         }
@@ -357,6 +382,7 @@ namespace Kanban_BdeB
         {
             e.CanExecute = inputTache.Text != "";
         }
+
         /// <summary>
         /// Methodes pour le bouton TerminerEtape
         /// Ce bouton permet de terminer une etape selectionnée
@@ -438,7 +464,7 @@ namespace Kanban_BdeB
         }
         private void SupprimerEtape_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = currentEtape != null;
+            e.CanExecute = currentEtape != null && currentEtape.EtapeTerminer == false;
         }
 
         /// <summary>

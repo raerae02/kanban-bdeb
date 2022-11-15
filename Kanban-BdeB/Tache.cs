@@ -51,8 +51,9 @@ namespace Kanban_BdeB
             FromXml(xmlElement);
         }
 
-        //Recuperation de l'element xml et classer ses données dans les attributs de la classe Tache
-
+        /// <summary>
+        /// Recuperation de l'element xml et classer ses données dans les attributs de la classe Tache
+        /// </summary>
         public void FromXml(XmlElement xmlElementTache)
         {
             string dateFormat = "yyyy-MM-dd";
@@ -84,7 +85,9 @@ namespace Kanban_BdeB
                 Etapes.Add(etape);
             }
         }
-        //Recuperation du document xml et retourner un element xml representant un objet
+        /// <summary>
+        /// Recuperation du document xml et retourner un element xml representant un objet (tache)   
+        /// </summary>
         public XmlElement ToXml(XmlDocument xmlDocument)
         {
             XmlElement elementTache = xmlDocument.CreateElement("tache");
