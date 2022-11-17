@@ -2,7 +2,7 @@ Imports NUnit.Framework
 
 Namespace TestTache
 
-    Public Class Tests
+    Public Class TestTache
 
         <SetUp>
         Public Sub Setup()
