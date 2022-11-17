@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Utilitaires;
 
-namespace Kanban_BdeB
+namespace Etapes
 {
     public class Etape:IXMLSerializable
     {

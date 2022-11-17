@@ -1,4 +1,6 @@
 ﻿using System;
+using Etapes;
+using Taches;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +19,7 @@ using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using Microsoft.VisualBasic;
 using Path = System.IO.Path;
+
 
 namespace Kanban_BdeB
 {

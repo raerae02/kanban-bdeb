@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kanban-BdeB", "Kanban-BdeB\Kanban-BdeB.csproj", "{AB2EBEE0-87AE-4BFD-B40F-559FE2125617}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kanban-BdeB", "Kanban-BdeB\Kanban-BdeB.csproj", "{AB2EBEE0-87AE-4BFD-B40F-559FE2125617}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{1EA11058-E8C7-44EB-8D22-77DE9370BED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassesAffaire", "ClassesAffaire\ClassesAffaire.csproj", "{340954FD-E011-4A48-A00A-402F538E5475}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{AB2EBEE0-87AE-4BFD-B40F-559FE2125617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB2EBEE0-87AE-4BFD-B40F-559FE2125617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB2EBEE0-87AE-4BFD-B40F-559FE2125617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA11058-E8C7-44EB-8D22-77DE9370BED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA11058-E8C7-44EB-8D22-77DE9370BED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA11058-E8C7-44EB-8D22-77DE9370BED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA11058-E8C7-44EB-8D22-77DE9370BED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340954FD-E011-4A48-A00A-402F538E5475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340954FD-E011-4A48-A00A-402F538E5475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340954FD-E011-4A48-A00A-402F538E5475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340954FD-E011-4A48-A00A-402F538E5475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

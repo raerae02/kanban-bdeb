@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using Utilitaires;
+using Etapes;
 
-namespace Kanban_BdeB
+namespace Taches
 {
-    internal class Tache : IXMLSerializable
+    public class Tache : IXMLSerializable
     {
         public DateOnly? DateCreation
         {
