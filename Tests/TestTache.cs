@@ -53,9 +53,12 @@ namespace Tests
                 [Test]
         public void TestStatutTermine()
         {
+            //ARRANGE
             bool checkStatutTermine = false;
             ChargerTacheXML(strTacheT);
             int countDone = 0;
+
+            //ACT
             if (objTache.DateCreation != null && objTache.DateDebut != null && objTache.DateFin != null)
             {
                 foreach (Etape etape in objTache.Etapes)
@@ -72,6 +75,7 @@ namespace Tests
                 checkStatutTermine = true;
             }
 
+            //ASSERT
             Assert.AreEqual(true, checkStatutTermine);
         }
 
@@ -81,9 +85,11 @@ namespace Tests
         [Test]
         public void TestStatutEncours()
         {
+            //ARRANGE
             int countDone = 0;
             bool checkStatutEnCours = false;
             ChargerTacheXML(strTacheEC);
+            //ACT
             if (objTache.DateCreation != null && objTache.DateDebut != null && objTache.DateFin == null)
             {
                 foreach (Etape etape in objTache.Etapes)
@@ -100,6 +106,7 @@ namespace Tests
                 checkStatutEnCours = true;
             }
 
+            //ASSERT
             Assert.AreEqual(true, checkStatutEnCours);
         }
 
@@ -109,10 +116,12 @@ namespace Tests
         [Test]
         public void TestStatutPlanifie()
         {
+            //ARRANGE
             bool checkStatutPlanifiee = false;
             ChargerTacheXML(strTacheP);
             int countDone = objTache.Etapes.Count;
 
+            //ACT
             if (objTache.DateCreation != null && objTache.DateDebut == null && objTache.DateFin == null)
             {
                 foreach (Etape etape in objTache.Etapes)
@@ -129,9 +138,14 @@ namespace Tests
                 checkStatutPlanifiee = true;
             }
 
+            //ASSERT
             Assert.AreEqual(true, checkStatutPlanifiee);
 
         }
+
+        /// <summary>
+        /// Charger Tache en XML
+        /// </summary>
         void ChargerTacheXML(string strTache)
         {
             XmlDocument doc = new XmlDocument();
